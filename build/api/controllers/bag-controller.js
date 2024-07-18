@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getBagByIdAsync = exports.createBagAsync = exports.updateBagAsync = exports.deleteBagAsync = exports.getBagsAsync = void 0;
+const bag_service_1 = require("../../core/services/bag-service");
+const bag_storage_1 = require("../../core/storage/bag-storage");
+const bag_handler_1 = require("../handlers/bag-handler");
+const async_error_middleware_1 = __importDefault(require("../middlewares/async-error-middleware"));
+const bagStorage = new bag_storage_1.BagStorage();
+const bagService = new bag_service_1.BagService(bagStorage);
+const bagHandler = new bag_handler_1.BagHandler(bagService);
+const getBagsAsync = (0, async_error_middleware_1.default)(bagHandler.getAllBags.bind(bagHandler));
+exports.getBagsAsync = getBagsAsync;
+const deleteBagAsync = (0, async_error_middleware_1.default)(bagHandler.deleteBag.bind(bagHandler));
+exports.deleteBagAsync = deleteBagAsync;
+const updateBagAsync = (0, async_error_middleware_1.default)(bagHandler.update.bind(bagHandler));
+exports.updateBagAsync = updateBagAsync;
+const createBagAsync = (0, async_error_middleware_1.default)(bagHandler.createBag.bind(bagHandler));
+exports.createBagAsync = createBagAsync;
+const getBagByIdAsync = (0, async_error_middleware_1.default)(bagHandler.getById.bind(bagHandler));
+exports.getBagByIdAsync = getBagByIdAsync;

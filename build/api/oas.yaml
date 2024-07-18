@@ -1,0 +1,214 @@
+openapi: 3.0.3
+info:
+  title: Product Creation API 3.0
+  description: This is useful for performing CRUD operations on the API
+  contact:
+    email: kranthi8919@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:4000/api
+paths:
+  /bag/create:
+    post:
+      tags:
+        - Bag
+      summary: Create a new Product in the Bag
+      description: This is useful for creating an product into the Bag
+      operationId: createBagAsync
+      x-eov-operation-handler: bag-controller
+      requestBody:
+        description: This is useful for creating an product into the Bag
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bag'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bag'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Bag'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Error'
+        '401':
+          description: Pet not found
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Error'
+  /bag/update/{id}/id:
+    summary: This is used to update the bag data
+    description: This is used to update the bag data
+    parameters:
+      - $ref: '#/components/parameters/id'
+    put:
+      requestBody:
+        required: true
+        description: This is useful for creating an product into the Bag
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bag'
+      summary: This is used to update the bag data
+      description: This is used to update the bag data
+      operationId: updateBagAsync
+      x-eov-operation-handler: bag-controller
+      responses:
+        '200':
+          description: On Successful Update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bag'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Error'
+        '401':
+          description: Pet not found
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Error'
+      tags:
+        - Bag
+  /bag/delete/{id}/id:
+    summary: To delete the item in the Bag
+    description: To delete the item in the Bag
+    delete:
+      parameters:
+        - $ref: '#/components/parameters/id'
+      summary: To delete the item in the Bag
+      description: To delete the item in the Bag
+      operationId: deleteBagAsync
+      x-eov-operation-handler: bag-controller
+      responses:
+        default:
+          description: Default error sample response
+        '202':
+          description: On Succesfull Delete
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Error'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Error'
+        '401':
+          description: Pet not found
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Error'
+      tags:
+        - Bag
+  /bags:
+    summary: To get all the items in the bag
+    description: To get all the items in the bag
+    get:
+      summary: To get all the items in the bag
+      description: To get all the items in the bag
+      operationId: getBagsAsync
+      x-eov-operation-handler: bag-controller
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BagArray'
+        '401':
+          description: Pet not found
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Error'
+      tags:
+        - Bag
+  /bag/{id}/id:
+    summary: To get  the item in the bag by id
+    description: To get  the item in the bag by id
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      summary: To get  the item in the bag by id
+      description: To get  the item in the bag by id
+      operationId: getBagByIdAsync
+      x-eov-operation-handler: bag-controller
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Bag'
+        '401':
+          description: Pet not found
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Error'
+      tags:
+        - Bag
+components:
+  parameters:
+    id:
+      name: id
+      required: true
+      in: path
+      schema:
+        type: string
+  schemas:
+    Bag:
+      type: object
+      required:
+        - title
+        - description
+        - price
+        - noOfReviews
+        - spectifications
+        - tumbnails
+      properties:
+        id:
+          type: string
+          pattern: "^[a-fA-F0-9]{24}$"
+        title:
+          type: string
+          pattern: ^[A-Z][a-zA-Z]{2,14}$
+        description:
+          type: string
+        price:
+          type: number
+        discountPrice:
+          type: number
+        noOfReviews:
+          type: number
+        spectifications:
+          type: array
+          items:
+            type: string
+        tumbnails:
+          type: array
+          items:
+            type: string
+    BagArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Bag'
+    Error:
+      type: string
+  
