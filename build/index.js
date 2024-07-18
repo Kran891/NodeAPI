@@ -16,7 +16,8 @@ const http_1 = __importDefault(require("http"));
 const app_1 = require("./app");
 const mongoose_1 = __importDefault(require("mongoose"));
 const DBNAME = process.env.DBNAME || "bags";
-const MONGO_URL = process.env.MONGO_URL || `mongodb://localhost:27017/${DBNAME}`;
+const MONGO_URL = process.env.MONGO_URL || "mongodb+srv://kranthi8919:Ty8zsr7nH4bPWqcm@cluster0.utb5jtq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    || `mongodb://localhost:27017/${DBNAME}`;
 const PORT = process.env.PORT || 4000;
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
